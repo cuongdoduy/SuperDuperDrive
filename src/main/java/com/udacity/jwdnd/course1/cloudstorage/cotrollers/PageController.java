@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.models.ResponseObject;
 import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.AuthorizationService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public class PageController {
     private FileService fileService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NoteService noteService;
 
     public PageController(
             AuthorizationService authorizationService
@@ -33,6 +36,7 @@ public class PageController {
         String userName = (String) authentication.getPrincipal();
         User user = userService.getUser(userName);
         model.addAttribute("files", fileService.getAllFiles(user.getUserId()));
+        model.addAttribute("notes", noteService.getAllNotes(user.getUserId()));
         return "home";
     }
     @GetMapping("/login")

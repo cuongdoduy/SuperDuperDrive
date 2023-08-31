@@ -91,6 +91,20 @@
                                         <td>Example Note Description </td>
                                     </tr>
                                 </tbody>
+                                <tbody th:each="note: ${notes}">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-success"
+                                                    th:data-noteid="${note.noteid}"
+                                                    th:data-notetitle="${note.notetitle}"
+                                                    th:data-notedescription="${note.notedescription}"
+                                                    onclick="showNoteModal(this.getAttribute('data-noteid'),this.getAttribute('data-notetitle'),this.getAttribute('data-notedescription'))">Edit</button>
+                                            <a class="btn btn-danger" th:href="@{/deletenote/{noteId}(noteId=${note.noteid})}">Delete</a>
+                                        </td>
+                                        <th scope="row" th:text="${note.notetitle}"></th>
+                                        <td th:text="${note.notedescription}"></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
 
@@ -104,7 +118,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
+                                        <form action="#" th:action="@{/addNote}" method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
